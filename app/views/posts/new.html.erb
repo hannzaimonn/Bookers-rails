@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<div class="flash">
+<% flash.each do |key, value| %>
+  <%= content_tag(:div, value, class: "#{key}") %>
+<% end %>
+</div>
+
+
+<h1>Books</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th><P>title</P></th>
+				<th><P>body</P></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @posts.each do |post| %>
+
+			<tr>
+				<td><span><%= post.title %></span></td>
+				<td><span><%= post.body %></span></td>
+				<td><span><%= link_to "show", "/posts/#{post.id}"%></span></td>
+				<td><span><%= link_to "edit", edit_post_path(post) %></span></td>
+				<td><span><%= link_to "destroy", destroy_post_path(post), method: :delete, "data-confirm" =>"Are you sure？" %></span></td>
+			</tr>
+			<% end %>
+
+		</tbody>
+	</table>
+
+
+
+<h1>New book</h1>
+
+<%= form_for(@post) do |f| %>
+
+  <p>Title</p>
+  <%= f.text_field :title %>
+
+  <p>Body</p>
+  <%= f.text_field :body%>
+  <br>
+  <%= f.submit 'Create Book'%>
+
+<% end %>
+
+
+</body>
+</html>
