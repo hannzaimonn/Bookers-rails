@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render 'root/toplist', root: @root %>
+</head>
+<body>
+
 
 <h1>Editing Book</h1>
 <%= form_for(@post) do |f| %>
@@ -11,7 +18,10 @@
 <% end %>
 
 <p>
-	<%= link_to "show", post_path %>
-	|
+  <%= link_to "show", post_path %>
+  |
     <a href="/posts/new">Back</a>
 </p>
+
+</body>
+</html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-</head>
 <body>
+<header>
+	<%= render 'root/toplist', root: @root %>
+</header>
 
 <div class="flash">
 <% flash.each do |key, value| %>
@@ -12,31 +12,36 @@
 </div>
 
 
-<h1>Books</h1>
+<div class="container clearfix">
+ <div class="row">
+ 	<div class="col-lg-3" style="background-color: white">
+ 		<h2>User info</h2>
 
-	<table>
-		<thead>
-			<tr>
-				<th><P>title</P></th>
-				<th><P>body</P></th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @posts.each do |post| %>
-
-			<tr>
-				<td><span><%= post.title %></span></td>
-				<td><span><%= post.body %></span></td>
-				<td><span><%= link_to "show", "/posts/#{post.id}"%></span></td>
-				<td><span><%= link_to "edit", edit_post_path(post) %></span></td>
-				<td><span><%= link_to "destroy", destroy_post_path(post), method: :delete, "data-confirm" =>"Are you sure？" %></span></td>
-			</tr>
-			<% end %>
-
-		</tbody>
-	</table>
+<% if current_user.image != nil %>
+<%= attachment_image_tag current_user, :image, :fill, 150, 150, format: 'jpeg' %>
+<% else %>
+<%= image_tag 'sample_img.gif', style: "height: 150px" %>
+<% end %>
 
 
+ 		<table class="table table-hover">
+
+ 			<tbody>
+ 				 <tr>
+ 					<td>name</td>
+ 					<td><%= current_user.name %></td>
+ 				 </tr>
+ 				 <tr>
+ 					<td>Introduction</td>
+ 					<td><%= current_user.introduction %></td>
+ 				 </tr>
+ 			</tbody>
+ 		</table>
+
+
+<%= link_to(edit_user_path(current_user.id), class:  "btn btn-default") do %>
+		<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+<% end -%>
 
 <h1>New book</h1>
 
@@ -48,9 +53,38 @@
   <p>Body</p>
   <%= f.text_field :body%>
   <br>
-  <%= f.submit 'Create Book'%>
+  <%= f.submit 'Create Book', class: "btn btn-primary" %>
 
 <% end %>
+
+ 	</div>
+ 	<div class="col-lg-9">
+<h1>Books</h1>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th><P></P></th>
+				<th><P>title</P></th>
+				<th><P>body</P></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @posts.each do |post| %>
+			<% if current_user.id == post.user_id then %>
+			<tr class="new-table">
+				<td><span><%= render 'posts/image',user: current_user %></span></td>
+				<td><span><%= link_to post.title, "/posts/#{post.id}"%></span></td>
+				<td><span><%= post.body %></span></td>
+			</tr>
+			<% end %>
+			<% end %>
+
+		</tbody>
+	</table>
+   </div>
+  </div>
+</div>
 
 
 </body>

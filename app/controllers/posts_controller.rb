@@ -5,17 +5,29 @@ class PostsController < ApplicationController
   end
 
   def create
-  	  post = Post.new(post_params)
-  	  post.save
-  	  redirect_to post_path(post)
+  	  @post = Post.new(post_params)
+      @post.user_id = current_user.id
+  	  @post.save
+  	  redirect_to post_path(@post.id)
   	end
 
   def index
   	@posts = Post.all
+    @post = Post.new
+
   end
 
   def show
-  	@post = Post.find(params[:id])
+  	@book = Post.find(params[:id])
+    @posts = Post.all
+    @post = Post.new
+
+  end
+
+  def usershow
+    @book = Post.find(params[:id])
+    @posts = Post.all
+    @post = Post.new
   end
 
   def edit
@@ -32,12 +44,16 @@ class PostsController < ApplicationController
   def destroy
   	post = Post.find(params[:id])
   	post.destroy
-  	redirect_to posts_new_path
+  	redirect_to new_post_path
   	flash[:notice] = "Book was successfully destroyed"
+  end
+
+  def userinfo
+    @post = Post.new
   end
 
   private
   def post_params
-  	  params.require(:post).permit(:title, :body)
+  	  params.require(:post).permit(:title, :body, :image)
   end
 end

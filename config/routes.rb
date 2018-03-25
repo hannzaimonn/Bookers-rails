@@ -1,19 +1,15 @@
 Rails.application.routes.draw do
 
-  get 'posts/new'
+  devise_for :users
+  devise_scope :user do
+  	get 'user/sign_up' => 'devise/registrations#new'
+  end
 
+  get 'userinfos/new'
   get '/top' => 'root#top'
 
-  post '/posts' => 'posts#create'
-
-  get '/posts' => 'posts#index'
-
-  get '/posts/:id' => 'posts#show', as:'post'
-
-  get '/posts/:id/edit' => 'posts#edit', as:'edit_post'
-
-  patch '/posts/:id' => 'posts#update', as:'update_post'
-
-  delete '/posts/:id' => 'posts#destroy', as:'destroy_post'
+	resources :users, only: [:index,:show, :edit,:update]
+	resources :posts
+	resources :book_images,only:[:new,:create,:index,:show]
 
 end
