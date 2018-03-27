@@ -13,3 +13,4 @@ Rails.application.routes.draw do
 	resources :book_images,only:[:new,:create,:index,:show]
 
 end
+
