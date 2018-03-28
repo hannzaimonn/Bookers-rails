@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+
 <head>
 	<%= render 'root/toplist', root: @root %>
 </head>
@@ -15,27 +14,34 @@
 <div class="container">
  <div class="row">
  	<div class="col-lg-3" style="background-color: white">
+
  		<h2>User info</h2>
- 		<% if current_user.image != nil %>
-<%= attachment_image_tag current_user, :image, :fill, 150, 150, format: 'jpeg' %>
-<% else %>
-<%= image_tag 'sample_img.gif', style: "height: 150px" %>
-<% end %>
+
+ 		<% if @book.user.image != nil %>
+			<%= attachment_image_tag @book.user, :image, :fill, 150, 150, format: 'jpeg' %>
+		<% else %>
+			<%= image_tag 'sample_img.gif', style: "height: 150px" %>
+		<% end %>
+
  		<table class="table table-hover">
 
  			<tbody>
+
  				 <tr>
  					<td>name</td>
- 					<td><%= current_user.name %></td>
+ 					<td><%= @book.user.name %></td>
  				 </tr>
+
  				 <tr>
  					<td>Introduction</td>
- 					<td><%= current_user.introduction %></td>
+ 					<td><%= @book.user.introduction %></td>
  				 </tr>
+
  			</tbody>
+
  		</table>
 
-<%= link_to(edit_user_path(current_user.id), class:  "btn btn-default") do %>
+<%= link_to(edit_user_path(@book.user.id), class:  "btn btn-default") do %>
 		<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
 <% end -%>
 
@@ -44,10 +50,10 @@
 <%= form_for(@post) do |f| %>
 
   <p>Title</p>
-  <%= f.text_field :title %>
+  <%= f.text_field :title , class: "edit-title"%>
 
   <p>Body</p>
-  <%= f.text_field :body%>
+  <%= f.text_area :body, class: "edit-body"%>
   <br>
   <%= f.submit 'Create Book', class: "btn btn-primary" %>
 
@@ -62,33 +68,33 @@
 		<thead>
 		</thead>
 		<tbody>
-			<div class="flash">
-<% flash.each do |key, value| %>
-  <%= content_tag(:div, value, class: "#{key}") %>
-<% end %>
-</div>
+		  <div class="flash">
+              <% flash.each do |key, value| %>
+              <%= content_tag(:div, value, class: "#{key}") %>
+              <% end %>
+          </div>
 
 
-<table class="table table-hover">
-	<thead>
-	</thead>
-	<tbody>
-		<tr>
-			<td><span><%= attachment_image_tag @book.user, :image, :fill, 50, 50, format: 'jpeg' %></span></td>
-			<td><%= @book.title %></td>
-			<td><%= @book.body %></td>
+               <table class="table table-hover">
+	           <thead>
+	           </thead>
+	 <tbody>
+		  <tr>
+			  <td><span><%= attachment_image_tag @book.user, :image, :fill, 50, 50, format: 'jpeg' %></span></td>
+			  <td><%= @book.title %></td>
+			  <td><%= @book.body %></td>
 
-			<!-- もしも、ログインしているユーザーと、投稿したユーザーが合致したら編集と削除をするボタンをだします --> 
-			<% if current_user.id == @book.user_id %>
+			   <!-- もしも、ログインしているユーザーと、投稿したユーザーが合致したら編集と削除をするボタンをだします --> 
+			 <% if current_user.id == @book.user_id %>
 				<td><h4><span class="label label-success"><%= link_to "edit", edit_post_path(@book.id) %></span></h4></td>
 				<td><h4><span class="label label-danger"><%= link_to "destroy", post_path(@book), method: :delete, "data-confirm" =>"Are you sure？" %></span></h4></td>
-			<% else %>
+			 <% else %>
 				<td></td>
 				<td></td>
 
-			<% end %>
-		</tr>
-	</tbody>
+			 <% end %>
+		  </tr>
+	 </tbody>
 </table>
 
 		</tbody>

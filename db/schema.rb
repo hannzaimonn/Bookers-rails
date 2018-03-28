@@ -10,25 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322120312) do
-
-  create_table "book_images", force: :cascade do |t|
-    t.text "shop_name"
-    t.text "image_id"
-    t.text "caption"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "post_images", force: :cascade do |t|
-    t.text "user_name"
-    t.text "image_id"
-    t.text "caption"
-    t.integer "userid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 20180321085524) do
 
   create_table "posts", force: :cascade do |t|
     t.string "title"

@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+
 <body>
 <header>
 	<%= render 'root/toplist', root: @root %>
@@ -44,14 +43,22 @@
 <% end -%>
 
 <h1>New book</h1>
-
+<% if @post.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <%= form_for(@post) do |f| %>
 
   <p>Title</p>
-  <%= f.text_field :title %>
+  <%= f.text_field :title , class: "edit-title"%>
 
   <p>Body</p>
-  <%= f.text_field :body%>
+  <%= f.text_area :body , class: "edit-body"%>
   <br>
   <%= f.submit 'Create Book', class: "btn btn-primary" %>
 

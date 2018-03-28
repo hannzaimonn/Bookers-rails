@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+
 <head>
 	<%= render 'root/toplist', root: @root %>
 </head>
@@ -44,10 +43,10 @@
 <%= form_for(@post) do |f| %>
 
   <p>Title</p>
-  <%= f.text_field :title %>
+  <%= f.text_field :title , class: "edit-title"%>
 
   <p>Body</p>
-  <%= f.text_field :body%>
+  <%= f.text_area :body, class: "edit-body"%>
   <br>
   <%= f.submit 'Create Book', class: "btn btn-primary" %>
 

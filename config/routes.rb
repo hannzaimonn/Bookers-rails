@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   end
 
   get 'userinfos/new'
-  get '/top' => 'root#top'
+  get '/about' => "root#about"
+
+  root 'root#top'
 
 	resources :users, only: [:index,:show, :edit,:update]
 	resources :posts
